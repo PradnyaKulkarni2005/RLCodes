@@ -1,0 +1,120 @@
+so100.urdf
+<?xml version="1.0" ?>
+<robot name="so100_arm">
+
+  <!-- Base -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.2 0.2 0.05"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- Link 1 -->
+  <link name="link_1">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.2"/>
+      </geometry>
+      <origin xyz="0 0 0.1"/>
+    </visual>
+  </link>
+
+  <joint name="joint_1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link_1"/>
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0"/>
+  </joint>
+
+  <!-- Link 2 -->
+  <link name="link_2">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.2"/>
+      </geometry>
+      <origin xyz="0 0 0.1"/>
+    </visual>
+  </link>
+
+  <joint name="joint_2" type="revolute">
+    <parent link="link_1"/>
+    <child link="link_2"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0"/>
+  </joint>
+
+  <!-- Link 3 -->
+  <link name="link_3">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.2"/>
+      </geometry>
+      <origin xyz="0 0 0.1"/>
+    </visual>
+  </link>
+
+  <joint name="joint_3" type="revolute">
+    <parent link="link_2"/>
+    <child link="link_3"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0"/>
+  </joint>
+
+  <!-- Gripper base -->
+  <link name="gripper_base">
+    <visual>
+      <geometry>
+        <box size="0.04 0.04 0.02"/>
+      </geometry>
+      <origin xyz="0 0 0.01"/>
+    </visual>
+  </link>
+
+  <joint name="gripper_joint" type="fixed">
+    <parent link="link_3"/>
+    <child link="gripper_base"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Left Finger -->
+  <link name="finger_left">
+    <visual>
+      <geometry>
+        <box size="0.01 0.04 0.04"/>
+      </geometry>
+      <origin xyz="0 0 0.02"/>
+    </visual>
+  </link>
+
+  <joint name="finger_left_joint" type="prismatic">
+    <parent link="gripper_base"/>
+    <child link="finger_left"/>
+    <origin xyz="0.02 0 0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="0" upper="0.02" effort="10.0" velocity="0.1"/>
+  </joint>
+
+  <!-- Right Finger -->
+  <link name="finger_right">
+    <visual>
+      <geometry>
+        <box size="0.01 0.04 0.04"/>
+      </geometry>
+      <origin xyz="0 0 0.02"/>
+    </visual>
+  </link>
+
+  <joint name="finger_right_joint" type="prismatic">
+    <parent link="gripper_base"/>
+    <child link="finger_right"/>
+    <origin xyz="-0.02 0 0" rpy="0 0 0"/>
+    <axis xyz="-1 0 0"/>
+    <limit lower="0" upper="0.02" effort="10.0" velocity="0.1"/>
+  </joint>
+
+</robot>
