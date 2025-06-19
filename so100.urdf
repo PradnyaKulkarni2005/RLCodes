@@ -1,0 +1,27 @@
+import gym
+import pybullet as p
+import pybullet_data
+import numpy as np
+import time
+from gym import spaces
+import math
+import os
+
+class SO100PickEnv(gym.Env):
+    def _init_(self, render_mode=False):
+        super(SO100PickEnv, self)._init_()
+        self.render_mode = render_mode
+        self.time_step = 1.0 / 240.0
+        self.max_steps = 200
+        self.step_counter = 0
+        self.urdf_path = "D:/robotics/so100.urdf"
+
+        self._connect()
+
+        # Action: delta x, y, z for gripper
+        self.action_space = spaces.Box(low=-0.05, high=0.05, shape=(3,), dtype=np.float32)
+
+        # Observation: gripper_pos (3), cube_pos (3)
+        obs_low = np.array([-1, -1, 0, -1, -1, 0])
+        obs_high = np.array([1, 1, 1, 1, 1, 1])
+        self.observation_space = spaces.Box(low=obs_low, high=obs_high, dtype=np.float32)
